@@ -36,3 +36,12 @@ class login(tk.Frame):
         tk.Frame.__init__(self, parent)
         lblInfo = tk.Label(self, font=('arial', 50, 'bold'), text='Login', fg='grey90', bd=1)
         lblInfo.pack(pady=10, padx=10)
+
+
+class register(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+
+app = Main()
+app.mainloop()
