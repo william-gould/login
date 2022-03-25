@@ -34,13 +34,55 @@ class Main(tk.Tk):
 class login(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        lblInfo = tk.Label(self, font=('arial', 50, 'bold'), text='Login', fg='grey90', bd=1)
-        lblInfo.pack(pady=10, padx=10)
+        lblInfo = tk.Label(self, font=('arial', 25, 'bold'), text='Login', fg='grey90', bd=1)
+        lblInfo.grid(row=0, column=0, columnspan=1, sticky='we')
+
+        username = StringVar()
+        password = StringVar()
+
+        lblUser = tk.Label(self, text='Username: ', relief=RIDGE, width=10)
+        lblUser.grid(row=3, column=0, sticky='w')
+        txtUser = tk.Entry(self, textvariable=username, justify='left', relief=SUNKEN, width=15)
+        txtUser.grid(row=3, column=1, sticky='w')
+
+        lblPass = tk.Label(self, text='Password: ', relief=RIDGE, width=10)
+        txtPass = tk.Entry(self, textvariable=password, justify='left', relief=SUNKEN, width=15)
+        txtPass.config(show='*')
+        lblPass.grid(row=4, column=0, sticky='w')
+        txtPass.grid(row=4, column=1, sticky='w')
+
+        submitBtn = ttk.Button(self, text='Login', command=lambda: log(username, password))
+        submitBtn.grid(row=100, column=0, columnspan=2, sticky='nesw', padx=5)
+
+        registerB = ttk.Button(self, text='Register')
+        registerB.grid(row=101, column=0, sticky='nesw', padx=(5,0))
+
+        resetBtn = ttk.Button(self, text='Reset Password')
+        resetBtn.grid(row=101, column=1, sticky='nesw', padx=(3,5))
+
+        def log(user, password):
+            usern = username.get()
+            passw = password.get()
+
+            if usern != '':
+                c = connection.cursor()
+                search = c.execute("SELECT * FROM user_TBL where username=?", (usern,))
+                for x in search:
+                    if passw == x[1]:
+                        messagebox.showinfo('Success', 'Login successful')
+
+                    else:
+                        messagebox.showerror("Error", "Invalid username or password.")
+
+                        connection.commit()
+            else:
+                messagebox.showerror("Error", 'Please enter a username and password.')
 
 
 class register(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        lblInfo = tk.Label(self, text='hello')
 
 
 app = Main()
